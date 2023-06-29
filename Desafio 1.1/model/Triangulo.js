@@ -14,7 +14,7 @@ export class Triangulo {
             const ladoC = v3.distanceCalc(v1)
     
             if (ladoA < ladoB + ladoC && ladoB < ladoA + ladoC && ladoC < ladoA + ladoB) {
-                console.log(`Triangulo formado!\nLado A: ${ladoA}\nLado B: ${ladoB}\nLado C:${ladoC}`);
+                console.log(`Triangulo formado!\nLado A: ${ladoA}\nLado B: ${ladoB}\nLado C:${ladoC}\n`);
                 this.#v1 = v1;
                 this.#v2 = v2;
                 this.#v3 = v3;
