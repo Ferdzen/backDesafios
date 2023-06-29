@@ -24,8 +24,8 @@ export class Vertice{
     }
 
     move(x, y){
-        this.#x = x;
-        this.#y = y;
+        this.#x = parseFloat(x);
+        this.#y = parseFloat(y);
     }
 
     equals(verticeB){
