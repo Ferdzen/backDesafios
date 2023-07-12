@@ -42,8 +42,11 @@ export default class Paciente {
 
     //Métodos para formatações
     formataCPF(cpf){
-        let cpfFormatado = cpf.join('');
-        return cpfFormatado.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        if(cpf.lenght >11){
+            return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        }else{
+        return cpf;
+        }
     }
 
     formataDataNasc(dia, mes, ano){
