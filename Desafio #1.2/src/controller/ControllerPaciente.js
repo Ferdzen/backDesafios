@@ -1,5 +1,6 @@
 import MenuCadastro from "../view/MenuCadastro.js";
 import Paciente from "../model/Paciente.js"
+import Table from 'cli-table'; //impressão de listagens
 
 export default class ControllerPaciente{
 
@@ -21,8 +22,9 @@ export default class ControllerPaciente{
             this.modelPaciente.verificaIdade(dataNasc[0], dataNasc[1], dataNasc[2]) >= 13){
                 if(this.modelPaciente.verificaRegistro(this.modelPaciente.formataCPF(cpf)) == false){
                     //Enviando dados tratados para Model
+
                     this.modelPaciente.nomePaciente = nome;
-                    this.modelPaciente.cpfPessoa = this.modelPaciente.formataCPF(this.converteCPF(cpf));
+                    this.modelPaciente.cpfPessoa = cpf;
                     this.modelPaciente.nascimentoPaciente = this.modelPaciente.formataDataNasc(dataNasc[0], dataNasc[1], dataNasc[2]);
 
                     //Cadastrando paciente
@@ -62,6 +64,24 @@ export default class ControllerPaciente{
                 this.viewCadastro.mensagemErroDigitosIguaisCpf();
             }
         }
+    }
+
+    listaPacienteNome(){
+        const table = new Table({
+            head: ['CPF', 'Nome', 'Dt.Nasc', 'Idade']
+        })
+        
+        let ordenacaoPaciente = this.modelPaciente.pacientes.slice().sort((a, b) => a.nome.localeCompare(b.nome))
+        
+        ordenacaoPaciente.forEach(paciente => {
+            table.push([paciente.cpf, paciente.nome, paciente.dataNasc, paciente.l]);
+          });
+          
+          // Exibe a tabela no console
+          console.log(table.toString());
+    }
+
+    listaPacienteCPF(){
     }
 
     //Tratamento dos dados obtidos
