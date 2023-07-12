@@ -1,14 +1,14 @@
 import MenuPricipal from "../view/MenuPrincipal.js";
-import MenuCadastro from "../view/MenuCadastro.js";
 import MenuAgenda from "../view/MenuAgenda.js";
 const prompt = PromptSync({ sigint: true }); // Entrada de dados
 import PromptSync from 'prompt-sync';
+import ControllerPaciente from "./ControllerPaciente.js";
 
 export default class ControllerMenus{
 
     constructor(){
         this.menuPricipal = new MenuPricipal();
-        this.menuCadastro = new MenuCadastro();
+        this.menuCadastro = new ControllerPaciente();
         this.menuAgenda = new MenuAgenda();
     }
 
@@ -41,11 +41,11 @@ export default class ControllerMenus{
     iniciarMenuCadastro() {
         let on = true;
         while (on) {
-            this.menuCadastro.imprimeOpcoesCadastro();
+            this.menuCadastro.viewCadastro.imprimeOpcoesCadastro();
             const opcao = prompt('Opção desejada:');
             switch (opcao) {
                 case '1':
-                    console.log('Cadastrado')
+                    this.menuCadastro.iniciaCadastro();
                     break;
                 case '2':
                     console.log('Excluido')
