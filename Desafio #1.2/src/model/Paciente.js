@@ -21,31 +21,56 @@ export default class Paciente {
         this.pacientes.push(paciente)
     }
 
+    //Método busca paciente
+    buscaPaciente(cpf){
+        //Busca matricula e verifica se ela existe
+        let indexPaciente = this.pacientes.findIndex(paciente => paciente.cpf === cpf);
+
+        if (indexPaciente === -1) {
+            return false;
+        }else{
+            return indexPaciente; //retorna posição do array se paciente é encontrado
+        }
+    }
+
     //TODO: Método delete
+    deletaPaciente(cpf){
+        //formata entrada do CPF, caso seja digitado com ou sem a pontuação.
+        let cpfVerificado = this.formataCPF(cpf);
+        //procura paciente na base de dados
+        let buscaPaciente = this.buscaPaciente(cpfVerificado);
+
+        if(buscaPaciente === false){ //verifica se existe na base de dados
+            return false;
+        }else{
+            //deleta paciente encontrado
+            this.pacientes.splice(buscaPaciente, 1);
+            return true;
+        }
+    }
     
     //Método lista paciente ordenado por CPF
     ordenaPacientesCPF(){
         let pacientesOrdenados = this.pacientes;
-        pacientesOrdenados = pacientesOrdenados.sort((a, b) => a.cpf.localeCompare(b.cpf));
+        pacientesOrdenados = pacientesOrdenados.slice().sort((a, b) => a.cpf.localeCompare(b.cpf));
 
         return pacientesOrdenados;
     }
     //Método lista paciente ordenado por Nome
-    ordenaPacientesNome(nome){
+    ordenaPacientesNome(){
         let pacientesOrdenados = this.pacientes;
-        pacientesOrdenados = pacientesOrdenados.sort((a, b) => a.nome.localeCompare(b.nome));
+        pacientesOrdenados = pacientesOrdenados.slice().sort((a, b) => a.nome.localeCompare(b.nome))
     
-        return pacientesOrdenados;
-        
+        return pacientesOrdenados;   
     }
 
 
     //Métodos para formatações
     formataCPF(cpf){
         if(cpf.lenght >11){
-            return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            return cpf;
         }else{
-        return cpf;
+            return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
         }
     }
 
@@ -154,25 +179,3 @@ export default class Paciente {
     }
 
 }
-
-// TESTES
-/*
-let p = new Paciente();
-/*
-let cpf = "944.585.130-79" // CPF gerado em ferramenta online para teste
-let cpf2 = "944.130.585-79" 
-
-console.log(p.validaDvsCpf(cpf))
-console.log(p.validaDvsCpf(cpf2))
-
-
-p.nomePaciente = "Juliano";
-p.nascimentoPaciente = "20-05-1980";
-p.cpfPessoa = "112.689.174-52";
-
-
-p.cadastraPaciente();
-p.cadastraPaciente();
-p.cadastraPaciente();
-
-console.log(p)*/
