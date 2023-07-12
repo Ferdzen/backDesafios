@@ -13,15 +13,6 @@ export default class MenuCadastro {
         console.log('5-Voltar p/ menu principal')
     }
 
-    //Impressão de lista de pacientes ordenados por CPF
-    imprimePaciente(){
-        const table = new Table({
-            head: ['CPF', 'Nome', 'Dt.Nasc', 'Idade']
-        })
-    }
-
-    //TODO: impressão de lista de pacientes ordenados por nome
-
     //Entrada de dados
     recebeNome(){
         let nome = prompt("Nome:")
@@ -38,6 +29,19 @@ export default class MenuCadastro {
         let ano = prompt("Ano:")
         let dtNasc = [dia, mes, ano]
         return dtNasc;
+    }
+
+    //Mensagens de processo de exclusão de paciente
+    mensagemDeletaPacienteInput(){
+        return console.log("Insira o dado do paciente para exclusão abaixo.");
+    }
+
+    mensagemNaoEncontrado(){
+        return console.log("Não há paciente sob este CPF registrado no sistema");
+    }
+
+    mensagemDeletaSucesso(){
+        return console.log("Paciente excluído com sucesso!")
     }
 
     //Mensagem de Cadastro bem sucedido
