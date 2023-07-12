@@ -48,13 +48,13 @@ export default class ControllerMenus{
                     this.menuCadastro.iniciaCadastro();
                     break;
                 case '2':
-                    console.log('Excluido')
+                    this.menuCadastro.iniciaDelete();
                     break;
                 case '3':
-                    console.log('Listado paciente (por CPF)')
+                    this.menuCadastro.listaPacienteCPF();
                     break;
                 case '4':
-                    console.log('Listado paciente (por nome)')
+                    this.menuCadastro.listaPacienteNome();
                     break;
                 case '5':
                     console.log('Voltando para o principal')
