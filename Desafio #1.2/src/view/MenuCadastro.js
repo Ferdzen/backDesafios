@@ -14,7 +14,7 @@ export default class MenuCadastro {
     }
 
     //Impressão de lista de pacientes ordenados por CPF
-    imprimePacienteNome(pacientes){
+    imprimePaciente(){
         const table = new Table({
             head: ['CPF', 'Nome', 'Dt.Nasc', 'Idade']
         })
