@@ -11,6 +11,7 @@ export default class Paciente {
         this.pacientes = []
     }
 
+    //Métodos de cadastramento\\
     //Método para cadastro de paciente
     cadastraPaciente() {
         const paciente = {
@@ -23,7 +24,7 @@ export default class Paciente {
 
     //Método busca paciente
     buscaPaciente(cpf){
-        //Busca matricula e verifica se ela existe
+        //Busca cpf e verifica se ela existe
         let indexPaciente = this.pacientes.findIndex(paciente => paciente.cpf === cpf);
 
         if (indexPaciente === -1) {
@@ -33,7 +34,7 @@ export default class Paciente {
         }
     }
 
-    //TODO: Método delete
+    //Método deleta paciente
     deletaPaciente(cpf){
         //formata entrada do CPF, caso seja digitado com ou sem a pontuação.
         let cpfVerificado = this.formataCPF(cpf);
@@ -65,7 +66,7 @@ export default class Paciente {
     }
 
 
-    //Métodos para formatações
+    //Métodos para formatações\\
     formataCPF(cpf){
         if(cpf.lenght >11){
             return cpf;
@@ -78,6 +79,7 @@ export default class Paciente {
         return `${dia}/${mes}/${ano}`
     }
 
+    //Manipulação de atributos privados\\
     //Setagem variaveis
     set nomePaciente(nomePaciente) {
         this.#nome = nomePaciente;
@@ -101,7 +103,7 @@ export default class Paciente {
         return this.#dataNasc;
     }
 
-    //Métodos para validações
+    //Métodos para validações\\
 
     //Validação do CPF pela verificação dos DVs
     validaDvsCpf(cpf) {
