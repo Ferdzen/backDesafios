@@ -78,10 +78,10 @@ export default class ControllerMenus{
                     this.menuAgenda.iniciaAgendamento();
                     break;
                 case '2':
-                    console.log('Cancela agendamento');
+                    this.menuAgenda.iniciaDelete();
                     break;
                 case '3':
-                    console.log('Listando agenda');
+                    this.menuAgenda.listaAgenda();
                     break;
                 case '4':
                     console.log('Voltando ao principal')
