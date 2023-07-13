@@ -1,22 +1,22 @@
 import MenuPricipal from "../view/MenuPrincipal.js";
-import MenuAgenda from "../view/MenuAgenda.js";
-const prompt = PromptSync({ sigint: true }); // Entrada de dados
-import PromptSync from 'prompt-sync';
 import ControllerPaciente from "./ControllerPaciente.js";
+import ControllerAgenda from "./ControllerAgenda.js";
+import PromptSync from 'prompt-sync';
+const prompt = PromptSync({ sigint: true }); // Entrada de dados
 
 export default class ControllerMenus{
 
     constructor(){
-        this.menuPricipal = new MenuPricipal();
+        this.viewMenuPricipal = new MenuPricipal();
         this.menuCadastro = new ControllerPaciente();
-        this.menuAgenda = new MenuAgenda();
+        this.menuAgenda = null; // Será o controller de agenda, precisa da referência dos dados obtidos no cadastro de paciente
     }
 
     iniciarMenu(){
         let on = true;
 
         while (on) {
-            this.menuPricipal.imprimeOpcoes();
+            this.viewMenuPricipal.imprimeOpcoes();
             const opcao = prompt('Opção desejada:');
 
             switch (opcao) {
@@ -27,12 +27,12 @@ export default class ControllerMenus{
                     this.iniciarMenuAgenda();
                     break;
                 case '3':
-                    this.menuPricipal.mensagemFim();
+                    this.viewMenuPricipal.mensagemFim();
                     on = false;
                     break;
             
                 default:
-                    this.menuPricipal.mensagemPadrao();
+                    this.viewMenuPricipal.mensagemPadrao();
                     break;
             }
         }
@@ -40,6 +40,7 @@ export default class ControllerMenus{
 
     iniciarMenuCadastro() {
         let on = true;
+        this.menuAgenda = new ControllerAgenda(this.menuCadastro.modelPaciente.pacientes)
         while (on) {
             this.menuCadastro.viewCadastro.imprimeOpcoesCadastro();
             const opcao = prompt('Opção desejada:');
@@ -61,7 +62,7 @@ export default class ControllerMenus{
                     on = false;
                     break;
                 default:
-                    this.menuPricipal.mensagemPadrao();
+                    this.viewMenuPricipal.mensagemPadrao();
                     break;
             }
         }
@@ -70,11 +71,11 @@ export default class ControllerMenus{
     iniciarMenuAgenda(){
         let on = true;
         while(on) {
-            this.menuAgenda.imprimeOpcoesAgenda();
+            this.menuAgenda.viewAgenda.imprimeOpcoesAgenda();
             const opcao = prompt('Opção desejada:');
             switch (opcao) {
                 case '1':
-                    console.log('Consulta agendada.');
+                    this.menuAgenda.iniciaAgendamento();
                     break;
                 case '2':
                     console.log('Cancela agendamento');
@@ -87,7 +88,7 @@ export default class ControllerMenus{
                     on = false;
                     break;
                 default:
-                    this.menuPricipal.mensagemPadrao();
+                    this.viewMenuPricipal.mensagemPadrao();
                     break;
             }
         }
