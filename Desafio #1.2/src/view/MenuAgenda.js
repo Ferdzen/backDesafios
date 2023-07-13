@@ -8,5 +8,53 @@ export default class MenuAgenda{
         console.log('4-Voltar p/ menu principal')
     }
 
-    //TODO: Impressão de consultas agendadas
+    //Entrada de dados\\
+    recebeCpf(){
+        let cpf = prompt("CPF:")
+        return cpf;
+    }
+
+    recebeDataConsulta(){
+        console.log("Data consulta");
+        let dia = prompt("Dia:");
+        let mes = prompt("Mes:");
+        let ano = prompt("Ano:");
+        let dtConsulta = [dia, mes, ano]
+        return dtConsulta;
+    }
+
+    recebeHoraConsulta(){
+        console.log("Hora a marcar para consulta");
+        let horaInicial = prompt("Hora inicial:");
+        let horaFinal = prompt("Hora final:");
+        let periodoConsulta = [horaInicial, horaFinal];
+        return periodoConsulta;
+    }
+
+    //Mensagens de registo de agendamento\\
+    //Mensagem inicio de agendamento
+    mensagemInputAgendamento(){
+        return console.log("Insira os dados abaixo para o agendamento");
+    }
+
+    //Mensagens de Validação
+    mensagemErroNaoEncontrado(){
+        return console.log("Erro: Paciente não encontrado.")
+    }
+
+    mensagemErroDataInvalida(){
+        return console.log("Erro: Data inválida.")
+    }
+
+    mensagemErroHoraInvalida(){
+        return console.log("Erro: Horário inválido.")
+    }
+
+    mensagemErroAgendamento(){
+        return console.log("Erro: Agendamento só é possível entre as 08h e 19h.")
+    }
+
+    mensagemErroAgenda(){
+        return console.log("Erro: Horário indisponível na agenda.")
+    }
 }
