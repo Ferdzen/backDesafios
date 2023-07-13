@@ -3,11 +3,12 @@ export default class Agenda{
     #dtConsulta;
     #hrInicial;
     #hrFinal;
-    constructor(){
+    constructor(listaPacientes){
         this.#cpf = null;
         this.#dtConsulta = null;
         this.#hrInicial = null;
         this.#hrFinal = null;
+        this.pacientes = listaPacientes;
         this.agendamentos = [];
     }
     //Métodos de Agendamento
@@ -47,10 +48,40 @@ export default class Agenda{
         }
     }
 
+    listAgenda(){
+        let listaconsultas = this.agendamentos;
+        let listaPacientes = this.pacientes;
+        
+        listaPacientes.forEach((paciente) =>{
+            const pacienteId = paciente.cpf;
+
+            const consultasPaciente = listaconsultas.filter(
+                (consulta) => consulta.cpf === pacienteId
+            );
+
+            consultasPaciente.forEach((consulta) =>{
+
+                const agendaItem = {
+                    dataConsulta: consulta.dataConsulta,
+                    hrInicial: consulta.horaInicial,
+                    hrFinal: consulta.horaFinal,
+                    tempoConsulta: this.tempoConsulta(consulta.horaInicial, consulta.horaFinal),
+                    nome: paciente.nome,
+                    dataNasc: paciente.dataNasc,
+                }
+            })
+        })
+        
+
+        lista.forEach(paciente =>{
+            table.push
+        })
+    }
+
     //Manipulação de atributos privados\\
     //Setagem variaveis
     set cpfPessoa(cpf){
-        this.#cpf = cpfPessoa;
+        this.#cpf = cpf;
     }
 
     set dataConsulta(data){
@@ -84,11 +115,13 @@ export default class Agenda{
 
     //Métodos para formatação\\
     //Formata hora
-    formataHora(hora){
-        let horaInicio = hora[0];
-        let horaFim = hora[1];
+    
+    formataHora(horaRecebida){
+        let hora = horaRecebida.slice(0, 2);
+        let minuto = horaRecebida.slice(2, 4);
         
-
+        let horaFormatada = hora + ':' + minuto;
+        return horaFormatada;
     }
 
     //Métodos para validações\\
@@ -144,14 +177,25 @@ export default class Agenda{
     }
 
     //Método para verificar se a agenda está ocupada, para evitar agendamentos sobrepostos
-    verificAgenda(dataConsulta, hrInicial, hrFinal){
-        let indexAgenda = this.agendamentos.findIndex(agendamento => agendamento.dataConsulta === dataConsulta && agendamento.horaInicial === hrInicial && agendamento.horaFinal === hrFinal);
+    verificAgenda(data, hrInicial, hrFinal){
+        let indexAgenda = this.agendamentos.findIndex(agendamento => agendamento.dataConsulta === data && (agendamento.horaInicial === hrInicial && agendamento.horaFinal === hrFinal));
 
         if(indexAgenda === -1){
             return true; //Agenda livre
         }else{
             return false; //Agenda ocupada
         }
+    }
+
+    //Método que retorna o tempo total da consulta
+    tempoConsulta(hrInicial, hrFinal){
+        let horaInicial = parseInt(hrInicial.slice(0, 2));
+        let horaFinal = parseInt(hrFinal.slice(0, 2));
+        let minutoInicial = parseInt(hrInicial.slice(2, 4));
+        let minutoFinal = parseInt(hrFinal.slice(2, 4));
+        let duracao = String(Math.abs(horaInicial - horaFinal)) + ':' + String(Math.abs(minutoInicial - minutoFinal))
+
+        return duracao;
     }
 
 
