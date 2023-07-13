@@ -24,25 +24,25 @@ export default class ControllerAgenda {
         cpf = this.modelPaciente.formataCPF(cpf);
 
         //Validação: se há paciente registrado sob o cpf fornecido
-        if(this.modelPaciente.buscaPaciente(cpf) === false){
+        if (this.modelPaciente.buscaPaciente(cpf) === false) {
             this.viewAgenda.mensagemErroNaoEncontrado();
-        }else{
+        } else {
             //Validação: se a data da consulta está no passado ou não
-            if(this.comparaData(this.dataHoje(), dataConsulta) == false){
+            if (this.comparaData(this.dataHoje(), dataConsulta) == false) {
                 this.viewAgenda.mensagemErroDataInvalida();
-            }else{
+            } else {
                 //Validação: se a hora da consulta é no futuro
-                if((this.comparaHora(this.hrAtual(), horaConsulta[0]) == false) && this.comparaHora(this.hrAtual(), horaConsulta[1])){
+                if ((this.comparaHora(this.hrAtual(), horaConsulta[0]) == false) && this.comparaHora(this.hrAtual(), horaConsulta[1])) {
                     this.viewAgenda.mensagemErroHoraInvalida();
-                }else{
+                } else {
                     //Validação: Se o horário da consulta é no horário de atendimento
-                    if(this.modelAgenda.validaHorarioAgendamento(horaConsulta[0], horaConsulta[1]) == false){
+                    if (this.modelAgenda.validaHorarioAgendamento(horaConsulta[0], horaConsulta[1]) == false) {
                         this.viewAgenda.mensagemErroAgendamento();
-                    }else{
+                    } else {
                         //Validação: se não há consulta no horário fornecido
-                        if(this.modelAgenda.verificAgenda(dataConsulta, horaConsulta[0], horaConsulta[1]) == false){
+                        if (this.modelAgenda.verificAgenda(dataConsulta, horaConsulta[0], horaConsulta[1]) == false) {
                             this.viewAgenda.mensagemErroAgenda();
-                        }else{
+                        } else {
                             //Setando valores para objeto
                             this.modelAgenda.cpfPessoa = cpf;
                             this.modelAgenda.dataConsulta = dataConsulta;
@@ -60,6 +60,25 @@ export default class ControllerAgenda {
     }
 
     iniciaDelete() {
+        let cpf = this.viewAgenda.recebeCpf();
+        let dataConsulta = this.viewAgenda.recebeDataConsulta();
+        let horaConsulta = this.viewAgenda.recebeHoraInicial();
+
+        if (this.comparaData(this.dataHoje(), dataConsulta) == false) {
+            this.viewAgenda.mensagemErroCancelamentoData()
+        } else {
+            if (this.comparaHora(this.hrAtual(), horaConsulta) == false) {
+                this.viewAgenda.mensagemErroCancelamentoData()
+            } else {
+                if(this.modelAgenda.buscaAgendamento(cpf) == false){
+                    this.viewAgenda.mensagemErroCancelamentoSemRegistro()
+                }else{
+                    this.modelAgenda.removeAgendamento(cpf, dataConsulta);
+                    this.viewAgenda.mensagemSucessoCancelamento();
+                }
+            }
+        }
+
 
     }
 
@@ -68,7 +87,10 @@ export default class ControllerAgenda {
             head: ['Data', 'H.Ini', 'H.Fim', 'Tempo', 'Nome', 'Dt.Nasc']
         })
 
-        
+        const agenda = this.modelAgenda.listAgenda();
+
+        table.push(agenda);
+        return console.log(table.toString());
     }
 
     //Tratamento dos dados obtidos\\
@@ -95,17 +117,17 @@ export default class ControllerAgenda {
         }
     }
 
-    dataHoje(){
+    dataHoje() {
         let data = new Date();
-        let dia = String(data.getDate()).padStart(2,'0');
-        let mes = String(data.getMonth()+1).padStart(2, '0');
+        let dia = String(data.getDate()).padStart(2, '0');
+        let mes = String(data.getMonth() + 1).padStart(2, '0');
         let ano = String(data.getFullYear());
-        let dataAtual = dia + '/' + mes + '/' + ano; 
-        
+        let dataAtual = dia + '/' + mes + '/' + ano;
+
         return dataAtual;
     }
 
-    hrAtual(){
+    hrAtual() {
         let horaAtual = new Date();
         let hora = String(horaAtual.getHours());
         let minuto = String(horaAtual.getMinutes());
@@ -115,11 +137,11 @@ export default class ControllerAgenda {
 
     //Verificar se a data a ser agendada não está no passado.
     //Como estou trabalhando com datas String, tive que buscar uma maneira de separar a String da Data e reorganiza-la no Padrão Americano para só então poder realizar a verificação. Para separar, utilizei a função split, que reparte a String de acordo com o delimitador passado e coloca em um array. Depois, reorganizei em outra variável a data. 
-    comparaData(atual, agendada){
+    comparaData(atual, agendada) {
         //Separando String
         let dataAtualSeparada = atual.split('/');
         let dataConsultaSeparada = agendada.split('/');
-        
+
         //Reorganizando String no formato americano
         let dataAtual = dataAtualSeparada[2] + '-' + dataAtualSeparada[1] + '-' + dataAtualSeparada[0];
         let dataConsulta = dataConsultaSeparada[2] + '-' + dataConsultaSeparada[1] + '-' + dataConsultaSeparada[0];
@@ -127,33 +149,29 @@ export default class ControllerAgenda {
         //Tornando Date
         dataAtual = new Date(dataAtual);
         dataConsulta = new Date(dataConsulta);
-        
+
         //Validando
-        if(dataConsulta < dataAtual){
+        if (dataConsulta < dataAtual) {
             return false;
-        }else{
+        } else {
             return true;
         }
 
     }
 
     //Verificando se a hora agendada é maior que a data atual. A mesma funcionalidade da comparaData, só que com horas. Mais fácil de lidar por conta de só lidar com os numeros e não ter pontuação separando.
-    comparaHora(atual, agendada){
+    comparaHora(atual, agendada) {
         let horaAtual = parseInt(atual.slice(0, 2));
         let minutoAtual = parseInt(atual.slice(2, 4));
         let horaAgendada = parseInt(agendada.slice(0, 2));
         let minutoAgendada = parseInt(agendada.slice(2, 4));
 
-        if(horaAgendada >= horaAtual && minutoAgendada > minutoAtual){
+        if (horaAgendada >= horaAtual && minutoAgendada > minutoAtual) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
 
 }
-
-let ca = new ControllerAgenda();
-
-console.log(ca.comparaData('18/07/2023', '15/07/2023'));
