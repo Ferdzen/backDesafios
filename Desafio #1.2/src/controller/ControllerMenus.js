@@ -40,7 +40,7 @@ export default class ControllerMenus{
 
     iniciarMenuCadastro() {
         let on = true;
-        this.menuAgenda = new ControllerAgenda(this.menuCadastro.modelPaciente.pacientes)
+        
         while (on) {
             this.menuCadastro.viewCadastro.imprimeOpcoesCadastro();
             const opcao = prompt('Opção desejada:');
@@ -59,6 +59,7 @@ export default class ControllerMenus{
                     break;
                 case '5':
                     console.log('Voltando para o principal')
+                    this.menuAgenda = new ControllerAgenda(this.menuCadastro.modelPaciente.pacientes);
                     on = false;
                     break;
                 default:
