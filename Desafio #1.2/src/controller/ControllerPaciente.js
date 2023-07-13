@@ -27,20 +27,20 @@ export default class ControllerPaciente {
 
                     this.modelPaciente.nomePaciente = nome;
                     this.modelPaciente.cpfPessoa = cpf;
-                    this.modelPaciente.nascimentoPaciente = this.modelPaciente.formataDataNasc(dataNasc[0], dataNasc[1], dataNasc[2]);
+                    this.modelPaciente.nascimentoPaciente = this.modelPaciente.formataData(dataNasc[0], dataNasc[1], dataNasc[2]);
 
                     //Cadastrando paciente
                     this.modelPaciente.cadastraPaciente();
                     this.viewCadastro.mensagemCadastroSucesso();
                 } else {
                     //Verificação final, se o paciente já está cadastrado pelo CPF
-                    this.viewCadastro.mensagemErroValidacao(nome, cpf, this.modelPaciente.formataDataNasc(dataNasc[0], dataNasc[1], dataNasc[2]));
+                    this.viewCadastro.mensagemErroValidacao(nome, cpf, this.modelPaciente.formataData(dataNasc[0], dataNasc[1], dataNasc[2]));
                     //Mensagem de erro para CPF existente.
                     this.viewCadastro.mensagemErroCpfExistente();
                 }
             } else {
                 //Caso retorne algum erro de validação, será verificado e retornado a mensagem correta.
-                this.viewCadastro.mensagemErroValidacao(nome, cpf, this.modelPaciente.formataDataNasc(dataNasc[0], dataNasc[1], dataNasc[2]));
+                this.viewCadastro.mensagemErroValidacao(nome, cpf, this.modelPaciente.formataData(dataNasc[0], dataNasc[1], dataNasc[2]));
 
                 if (this.modelPaciente.validaDvsCpf(cpf) == false) {
                     this.viewCadastro.mensagemErroCpfInvalido();
