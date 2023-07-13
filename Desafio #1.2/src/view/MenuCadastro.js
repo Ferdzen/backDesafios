@@ -1,6 +1,5 @@
 import PromptSync from 'prompt-sync';
 const prompt = PromptSync({ sigint: true }); // Entrada de dados
-import Table from 'cli-table'; //impressão de listagens
 
 export default class MenuCadastro {
     //Classe responsável pelo visual do menu cadastro
@@ -45,7 +44,7 @@ export default class MenuCadastro {
     }
 
     //Mensagem de Cadastro bem sucedido
-    mensagemCadastro(){
+    mensagemCadastroSucesso(){
         return console.log("Paciente cadastrado com sucesso!");
     }
 
