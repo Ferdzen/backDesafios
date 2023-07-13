@@ -10,6 +10,8 @@ export default class ControllerPaciente {
         this.modelPaciente = new Paciente();
     }
 
+    //Métodos de processos principais do menu de cadastro\\
+    //Método de cadastro de paciente
     iniciaCadastro() {
         let nome = this.viewCadastro.recebeNome();
         let cpf = this.viewCadastro.recebeCpf();
@@ -29,7 +31,7 @@ export default class ControllerPaciente {
 
                     //Cadastrando paciente
                     this.modelPaciente.cadastraPaciente();
-                    this.viewCadastro.mensagemCadastro();
+                    this.viewCadastro.mensagemCadastroSucesso();
                 } else {
                     //Verificação final, se o paciente já está cadastrado pelo CPF
                     this.viewCadastro.mensagemErroValidacao(nome, cpf, this.modelPaciente.formataDataNasc(dataNasc[0], dataNasc[1], dataNasc[2]));
@@ -66,6 +68,7 @@ export default class ControllerPaciente {
         }
     }
 
+    //Método que lista paciente ordenado por nome
     listaPacienteNome() {
         const table = new Table({
             head: ['CPF', 'Nome', 'Dt.Nasc']
@@ -80,6 +83,7 @@ export default class ControllerPaciente {
         return console.log(table.toString());
     }
 
+    //Método que lista paciente ordenado por CPF
     listaPacienteCPF() {
         const table = new Table({
             head: ['CPF', 'Nome', 'Dt.Nasc']
@@ -94,6 +98,7 @@ export default class ControllerPaciente {
         return console.log(table.toString());
     }
 
+    //Método que deleta o paciente
     iniciaDelete(){
         //Mensagem de entrada para captação do input
         this.viewCadastro.mensagemDeletaPacienteInput();
@@ -108,7 +113,7 @@ export default class ControllerPaciente {
 
     }
 
-    //Tratamento dos dados obtidos
+    //Tratamento dos dados obtidos\\
     //Validação do nome
     validaNome(nomePessoa) {
         if (nomePessoa.length >= 5) {
@@ -147,7 +152,4 @@ export default class ControllerPaciente {
             return false;
         }
     }
-
-    //Tratamento para entrada da data de Nascimento
-    //TODO: Desenvolver métodos semelhantes para entrada da data de nascimento
 }
