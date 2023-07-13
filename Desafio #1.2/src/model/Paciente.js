@@ -75,7 +75,7 @@ export default class Paciente {
         }
     }
 
-    formataDataNasc(dia, mes, ano){
+    formataData(dia, mes, ano){
         return `${dia}/${mes}/${ano}`
     }
 
