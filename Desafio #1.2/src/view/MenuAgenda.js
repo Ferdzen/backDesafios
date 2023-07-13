@@ -1,3 +1,5 @@
+import PromptSync from 'prompt-sync';
+const prompt = PromptSync({ sigint: true }); // Entrada de dados
 export default class MenuAgenda{
     
     imprimeOpcoesAgenda(){
@@ -37,7 +39,11 @@ export default class MenuAgenda{
         return console.log("Insira os dados abaixo para o agendamento");
     }
 
-    //Mensagens de Validação
+    mensagemAgendamentoSucesso(){
+    return console.log("Consulta agendada!")
+}
+
+    //Mensagens de erro de Validação
     mensagemErroNaoEncontrado(){
         return console.log("Erro: Paciente não encontrado.")
     }
