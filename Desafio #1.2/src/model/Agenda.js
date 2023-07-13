@@ -59,6 +59,18 @@ export default class Agenda{
         }
     }
 
+    //Método semelhante ao que está no model Paciente, para buscar os pacientes que foram passados para este model.
+    buscaPacienteCadastrado(cpf){
+        //Busca cpf e verifica se ela existe
+        let indexPaciente = this.pacientes.findIndex(paciente => paciente.cpf === cpf);
+
+        if (indexPaciente === -1) {
+            return false;
+        }else{
+            return indexPaciente; //retorna posição do array se paciente é encontrado
+        }
+    }
+
 
     listAgenda(){
         let listaconsultas = this.agendamentos;
