@@ -26,7 +26,7 @@ export default class Agenda{
 
     //Método cancela agendamento
     removeAgendamento(cpf, dataConsulta){
-        let buscaAgenda = this.buscaAgendamento(cpf, dataConsulta);
+        let buscaAgenda = this.buscaAgendamentoData(cpf, dataConsulta);
         
         //verifica se há agendamento para remover
         if(buscaAgenda === false){
@@ -38,7 +38,7 @@ export default class Agenda{
     }
 
     //Método que busca agendamento no sistema
-    buscaAgendamento(cpf, dataConsulta){
+    buscaAgendamentoData(cpf, dataConsulta){
         let indexAgendamento = this.agendamentos.findIndex(agendamento => agendamento.cpf === cpf && agendamento.dtConsulta === dataConsulta);
 
         if(indexAgendamento === -1){
@@ -47,10 +47,24 @@ export default class Agenda{
             return indexAgendamento;
         }
     }
+    
+    //Método que busca todos os agendamentos registrados naquele CPF
+    buscaAgendamento(cpf){
+        let indexAgendamento = this.agendamentos.findIndex(agendamento => agendamento.cpf === cpf);
+
+        if(indexAgendamento === -1){
+            return false;
+        }else{
+            return indexAgendamento;
+        }
+    }
+
 
     listAgenda(){
         let listaconsultas = this.agendamentos;
         let listaPacientes = this.pacientes;
+
+        const agenda = [];
         
         listaPacientes.forEach((paciente) =>{
             const pacienteId = paciente.cpf;
@@ -69,13 +83,15 @@ export default class Agenda{
                     nome: paciente.nome,
                     dataNasc: paciente.dataNasc,
                 }
+                agenda.push(agendaItem);
             })
         })
         
-
-        lista.forEach(paciente =>{
-            table.push
-        })
+        if(agenda == null){
+            return false;
+        }else{
+            return agenda;
+        }
     }
 
     //Manipulação de atributos privados\\
