@@ -1,11 +1,12 @@
 import Agenda from "../model/Agenda.js";
 import Paciente from "../model/Paciente.js";
 import MenuAgenda from "../view/MenuAgenda.js";
+import Table from 'cli-table'; //impressão de listagens
 
-class ControllerAgenda {
-    constructor() {
+export default class ControllerAgenda {
+    constructor(listaPacientes) {
         this.viewAgenda = new MenuAgenda();
-        this.modelAgenda = new Agenda();
+        this.modelAgenda = new Agenda(listaPacientes);
         this.modelPaciente = new Paciente();
     }
 
@@ -16,31 +17,41 @@ class ControllerAgenda {
         let dataConsulta = this.viewAgenda.recebeDataConsulta();
         let horaConsulta = this.viewAgenda.recebeHoraConsulta();
 
+        //Formata a data
+        dataConsulta = this.modelPaciente.formataData(dataConsulta[0], dataConsulta[1], dataConsulta[2]);
+
         //trata entrada CPF
         cpf = this.modelPaciente.formataCPF(cpf);
 
         //Validação: se há paciente registrado sob o cpf fornecido
-        if(this.modelPaciente.buscaPaciente(cpf) == false){
+        if(this.modelPaciente.buscaPaciente(cpf) === false){
             this.viewAgenda.mensagemErroNaoEncontrado();
         }else{
+            //Validação: se a data da consulta está no passado ou não
             if(this.comparaData(this.dataHoje(), dataConsulta) == false){
                 this.viewAgenda.mensagemErroDataInvalida();
             }else{
+                //Validação: se a hora da consulta é no futuro
                 if((this.comparaHora(this.hrAtual(), horaConsulta[0]) == false) && this.comparaHora(this.hrAtual(), horaConsulta[1])){
                     this.viewAgenda.mensagemErroHoraInvalida();
                 }else{
+                    //Validação: Se o horário da consulta é no horário de atendimento
                     if(this.modelAgenda.validaHorarioAgendamento(horaConsulta[0], horaConsulta[1]) == false){
                         this.viewAgenda.mensagemErroAgendamento();
                     }else{
+                        //Validação: se não há consulta no horário fornecido
                         if(this.modelAgenda.verificAgenda(dataConsulta, horaConsulta[0], horaConsulta[1]) == false){
                             this.viewAgenda.mensagemErroAgenda();
                         }else{
+                            //Setando valores para objeto
                             this.modelAgenda.cpfPessoa = cpf;
                             this.modelAgenda.dataConsulta = dataConsulta;
                             this.modelAgenda.horaInicial = horaConsulta[0];
                             this.modelAgenda.horaFinal = horaConsulta[1];
 
+                            //Cadastrando agendamento
                             this.modelAgenda.addAgendamento();
+                            this.viewAgenda.mensagemAgendamentoSucesso();
                         }
                     }
                 }
@@ -53,7 +64,11 @@ class ControllerAgenda {
     }
 
     listaAgenda() {
+        const table = new Table({
+            head: ['Data', 'H.Ini', 'H.Fim', 'Tempo', 'Nome', 'Dt.Nasc']
+        })
 
+        
     }
 
     //Tratamento dos dados obtidos\\
@@ -102,7 +117,7 @@ class ControllerAgenda {
     //Como estou trabalhando com datas String, tive que buscar uma maneira de separar a String da Data e reorganiza-la no Padrão Americano para só então poder realizar a verificação. Para separar, utilizei a função split, que reparte a String de acordo com o delimitador passado e coloca em um array. Depois, reorganizei em outra variável a data. 
     comparaData(atual, agendada){
         //Separando String
-        let dataAtualSeparada = atual.split('/')
+        let dataAtualSeparada = atual.split('/');
         let dataConsultaSeparada = agendada.split('/');
         
         //Reorganizando String no formato americano
