@@ -24,7 +24,7 @@ export default class ControllerAgenda {
         cpf = this.modelPaciente.formataCPF(cpf);
 
         //Validação: se há paciente registrado sob o cpf fornecido
-        if (this.modelPaciente.buscaPaciente(cpf) === false) {
+        if (this.modelAgenda.buscaPacienteCadastrado(cpf) === false) {
             this.viewAgenda.mensagemErroNaoEncontrado();
         } else {
             //Validação: se a data da consulta está no passado ou não
@@ -89,7 +89,7 @@ export default class ControllerAgenda {
 
         const agenda = this.modelAgenda.listAgenda();
 
-        table.push(agenda);
+        table.push([agenda.dataConsulta, agenda.hrInicial, agenda.hrFinal, agenda.tempoConsulta, agenda.nome, agenda.dataNasc]);
         return console.log(table.toString());
     }
 
@@ -140,7 +140,7 @@ export default class ControllerAgenda {
     comparaData(atual, agendada) {
         //Separando String
         let dataAtualSeparada = atual.split('/');
-        let dataConsultaSeparada = agendada.split('/');
+        let dataConsultaSeparada = String(agendada).split('/');
 
         //Reorganizando String no formato americano
         let dataAtual = dataAtualSeparada[2] + '-' + dataAtualSeparada[1] + '-' + dataAtualSeparada[0];
