@@ -33,6 +33,15 @@ export default class MenuAgenda{
         return periodoConsulta;
     }
 
+    //Input para cancelamento
+    recebeHoraInicial(){
+        console.log("Hora agendada")
+        let horaInicial = prompt("Horário:");
+
+        return horaInicial;
+    }
+
+
     //Mensagens de registo de agendamento\\
     //Mensagem inicio de agendamento
     mensagemInputAgendamento(){
@@ -62,5 +71,19 @@ export default class MenuAgenda{
 
     mensagemErroAgenda(){
         return console.log("Erro: Horário indisponível na agenda.")
+    }
+
+    //Mensagem para cancelamentos
+    mensagemErroCancelamentoData(){
+        return console.log("Erro: não é possível cancelar um evento que já passou.");
+    }
+
+    mensagemErroCancelamentoSemRegistro(){
+        return console.log("Erro: Não há agendamentos registrados neste CPF.");
+    }
+
+    //Mensagem Sucesso remoção
+    mensagemSucessoCancelamento(){
+        return console.log("Consulta cancelada com sucesso!");
     }
 }
