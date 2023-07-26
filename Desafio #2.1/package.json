@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  },
+  "name": "desafio-2.1",
+  "version": "1.0.0",
+  "description": "Desafio de manipulação de JSON",
+  "main": "validacao.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ferdzen/backDesafios.git"
+  },
+  "keywords": [
+    "JSON",
+    "Node"
+  ],
+  "author": "Ferdzen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ferdzen/backDesafios/issues"
+  },
+  "homepage": "https://github.com/Ferdzen/backDesafios#readme"
+}
