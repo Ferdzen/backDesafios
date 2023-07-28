@@ -67,9 +67,31 @@ function converteCPF(cpf) {
  * @returns {String} String CPF formatado em 111.111.111-11
  */
 function formataCPF(cpf){
-    if(cpf.lenght >11){
+    if(cpf.lenght == 14){
         return cpf;
     }else{
         return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    }
+}
+
+//Método para verificar se CPF tem a quantidade certa de caracteres
+function qtdCaracteresCPF(cpf) {
+    if (this.converteCPF(cpf).length == 11) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//Método para verificar se todos os digitos são iguais
+function verificaDigitosCPF(cpf) {
+    const cpfArray = this.converteCPF(cpf);
+
+    const caracteresIguais = cpfArray.every((caractere) => caractere === cpfArray[0]);
+
+    if (caracteresIguais) {
+        return true;
+    } else {
+        return false;
     }
 }

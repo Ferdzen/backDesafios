@@ -1,12 +1,12 @@
 {
   "dependencies": {
+    "luxon": "^3.3.0",
     "prompt-sync": "^4.2.0"
   },
   "name": "desafio-2.1",
   "version": "1.0.0",
   "description": "Desafio de manipulação de JSON",
   "main": "validacao.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
