@@ -1,4 +1,25 @@
 {
+  "name": "unidade-2",
+  "version": "1.0.0",
+  "description": "desafios da unidade 2.",
+  "main": "conversor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ferdzen/backDesafios.git"
+  },
+  "keywords": [
+    "javascrip",
+    "typescript"
+  ],
+  "author": "Ferdzen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ferdzen/backDesafios/issues"
+  },
+  "homepage": "https://github.com/Ferdzen/backDesafios#readme",
   "devDependencies": {
     "@types/node": "^20.4.6"
   },
